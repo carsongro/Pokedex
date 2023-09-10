@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct PokeListView: View {
+    @ObservedObject var viewModel = PokeListViewViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(viewModel.pokemon) { pokemon in
+            VStack {
+                Text(pokemon.name)
+            }
+        }
     }
 }
 

@@ -10,6 +10,11 @@ import SwiftUI
 final class PokeImageLoader {
     static let shared = PokeImageLoader()
     
+    enum PokeImageLoaderError: Error {
+        case invalidServerResponse
+        case unsupportedImage
+    }
+    
     private var imageDataCache = NSCache<NSString, NSData>()
     
     private init() {}
@@ -28,11 +33,11 @@ final class PokeImageLoader {
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
-            throw PokeError.invalidServerResponse
+            throw PokeImageLoaderError.invalidServerResponse
         }
         
         guard let image = UIImage(data: data as Data) else {
-            throw PokeError.unsupportedImage
+            throw PokeImageLoaderError.unsupportedImage
         }
         
         let value = data as NSData
@@ -40,9 +45,4 @@ final class PokeImageLoader {
         
         return image
     }
-}
-
-enum PokeError: Error {
-    case invalidServerResponse
-    case unsupportedImage
 }

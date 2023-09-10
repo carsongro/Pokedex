@@ -49,7 +49,7 @@ final class PokeService {
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
-            throw PokeError.invalidServerResponse
+            throw PokeServiceError.failedToGetData
         }
         
         // Decode response
