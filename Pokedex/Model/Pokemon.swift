@@ -10,7 +10,7 @@ import Foundation
 // MARK: Pokemon
 struct Pokemon: Codable, Identifiable {
     let abilities: [Ability]
-    let base_experience: Int
+    let base_experience: Int?
     let forms: [Species]
     let game_indices: [GameIndex]
     let height: Int
@@ -234,6 +234,6 @@ struct HeldItem: Codable {
 
 // MARK: PastType
 struct PastType: Codable {
-    let name: String
-    let url: String
+    let name: String?
+    let url: String?
 }
