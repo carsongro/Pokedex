@@ -63,13 +63,13 @@ struct VersionGroupDetail: Codable {
 
 // MARK: GenerationVIII
 struct GenerationVIII: Codable {
-    let icons: Sprites?
+    let icons: VersionSprites?
 }
 
 // MARK: GenerationVII
 struct GenerationVII: Codable {
-    let icons: Sprites?
-    let ultraSunUltraMoon: Sprites
+    let icons: VersionSprites?
+    let ultraSunUltraMoon: VersionSprites
     
     enum CodingKeys: String, CodingKey {
         case icons
@@ -79,8 +79,8 @@ struct GenerationVII: Codable {
 
 // MARK: GenerationVI
 struct GenerationVI: Codable {
-    let omegaRubyAlphaSapphire: Sprites
-    let XY: Sprites
+    let omegaRubyAlphaSapphire: VersionSprites
+    let XY: VersionSprites
     
     enum CodingKeys: String, CodingKey {
         case omegaRubyAlphaSapphire = "omegaruby-alphasapphire"
@@ -90,7 +90,7 @@ struct GenerationVI: Codable {
 
 // MARK: GenerationV
 struct GenerationV: Codable {
-    let blackWhite: Sprites
+    let blackWhite: VersionSprites
     
     enum CodingKeys: String, CodingKey {
         case blackWhite = "black-white"
@@ -99,8 +99,8 @@ struct GenerationV: Codable {
 
 // MARK: GenerationIV
 struct GenerationIV: Codable {
-    let diamondPearl: Sprites
-    let heartGoldSoulSilver: Sprites
+    let diamondPearl: VersionSprites
+    let heartGoldSoulSilver: VersionSprites
     
     enum CodingKeys: String, CodingKey {
         case diamondPearl = "diamond-pearl"
@@ -110,9 +110,9 @@ struct GenerationIV: Codable {
 
 // MARK: GenerationIII
 struct GenerationIII: Codable {
-    let emerald: Sprites
-    let fireRedLeafGreen: Sprites
-    let rubySapphire: Sprites
+    let emerald: VersionSprites
+    let fireRedLeafGreen: VersionSprites
+    let rubySapphire: VersionSprites
     
     enum CodingKeys: String, CodingKey {
         case emerald
@@ -123,15 +123,15 @@ struct GenerationIII: Codable {
 
 // MARK: GenerationII
 struct GenerationII: Codable {
-    let crystal: Sprites
-    let gold: Sprites
-    let silver: Sprites
+    let crystal: VersionSprites
+    let gold: VersionSprites
+    let silver: VersionSprites
 }
 
 // MARK: GenerationI
 struct GenerationI: Codable {
-    let redBlue: Sprites
-    let yellow: Sprites
+    let redBlue: VersionSprites
+    let yellow: VersionSprites
     
     enum CodingKeys: String, CodingKey {
         case redBlue = "red-blue"
@@ -163,6 +163,20 @@ struct Versions: Codable {
 
 // MARK: Sprites
 struct Sprites: Codable {
+    let back_default: String?
+    let back_female: String?
+    let back_shiny: String?
+    let back_shiny_Female: String?
+    let front_default: String?
+    let front_female: String?
+    let front_shiny: String?
+    let front_shiny_female: String?
+    let other: Other?
+    let versions: Versions
+}
+
+// MARK: VersionSprites
+struct VersionSprites: Codable {
     let back_default: String?
     let back_female: String?
     let back_shiny: String?
@@ -214,8 +228,8 @@ struct PokemonType: Codable {
 
 // MARK: HeldItem
 struct HeldItem: Codable {
-    let name: String
-    let url: String
+    let name: String?
+    let url: String?
 }
 
 // MARK: PastType

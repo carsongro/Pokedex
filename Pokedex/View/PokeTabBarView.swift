@@ -10,7 +10,7 @@ import SwiftUI
 struct PokeTabBarView: View {
     var body: some View {
         TabView {
-            PokeListView()
+            PokeGridView()
                 .tabItem {
                     Image(systemName: "house")
                 }

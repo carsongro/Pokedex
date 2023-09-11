@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/// Object to load images
+/// This is no longer in use because I'm using KingFisher for images and animated images
+/// but I'm keeping it here
 final class PokeImageLoader {
     static let shared = PokeImageLoader()
     
