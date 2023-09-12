@@ -86,7 +86,7 @@ final class PokeListViewViewModel: ObservableObject {
             queryParameters: [
                 URLQueryItem(
                     name: "limit",
-                    value: "50"
+                    value: "100"
                 ),
                 URLQueryItem(
                     name: "offset",
@@ -130,7 +130,7 @@ final class PokeListViewViewModel: ObservableObject {
                 guard let loadedPokemon = loadedPokemon else { continue }
                 if loadedPokemon.id > 10_000 && filterAlternates { // Any pokemon over 10,000 is an alternate form so we can choose to not include them
                     nextURL = nil // So we set the nextURL to nil so that we don't get any more
-                    break
+                    continue
                 }
                 newPokemon.append(loadedPokemon)
             }

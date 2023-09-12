@@ -12,18 +12,20 @@ struct PokeListViewCellView: View {
     @ObservedObject var viewModel: PokeListViewCellViewViewModel
     
     var body: some View {
-        VStack {
+        HStack {
             KFAnimatedImage(viewModel.pokemonAnimatedSpriteURL != nil ?
                             viewModel.pokemonAnimatedSpriteURL :
                                 viewModel.pokemonSpriteURL
             )
             .scaledToFit()
-            .shadow(color: .secondary, radius: 3, x: 2, y: -2)
+            .frame(width: 50)
+            .shadow(color: .secondary, radius: 2, x: 1, y: -1)
             
-            HStack {
-                Text("\(viewModel.id)")
-                Text(viewModel.pokemonName)
-            }
+            Text("\(viewModel.id)")
+            
+            Text(viewModel.pokemonName)
+            
+            Spacer()
         }
         .frame(maxWidth: .infinity)
         .padding()

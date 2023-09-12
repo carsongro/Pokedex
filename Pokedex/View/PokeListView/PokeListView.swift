@@ -25,20 +25,17 @@ struct PokeListView: View {
                                         types: pokemon.types
                                     )
                         )
-                        .shadow(color: .secondary, radius: 3, x: 3, y: 3)
-                        .frame(height: fullView.size.height * 0.2)
+                        .shadow(color: .secondary, radius: 2, x: 2, y: 2)
+                        .frame(height: fullView.size.height * 0.1)
                     }
                     
-                }
-                .padding(12)
-                
-                LazyVStack {
                     if viewModel.canGetMorePokemon {
                         ProgressView()
                             .padding(.top, 20)
                             .onAppear { viewModel.getMorePokemon() }
                     }
                 }
+                .padding(12)
             }
         }
     }
