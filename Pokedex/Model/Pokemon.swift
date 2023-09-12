@@ -25,7 +25,7 @@ struct Pokemon: Codable, Identifiable {
     let species: Species
     let sprites: Sprites
     let stats: [Stat]
-    let types: [PokemonType]
+    let types: [PokemonResponseType]
     let weight: Int
 }
 
@@ -221,7 +221,7 @@ struct Stat: Codable {
 }
 
 // MARK: PokemonType
-struct PokemonType: Codable {
+struct PokemonResponseType: Codable {
     let slot: Int
     let type: Species
 }

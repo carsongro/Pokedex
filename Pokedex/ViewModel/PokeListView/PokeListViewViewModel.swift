@@ -5,7 +5,7 @@
 //  Created by Carson Gross on 9/9/23.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 final class PokeListViewViewModel: ObservableObject {
@@ -21,7 +21,6 @@ final class PokeListViewViewModel: ObservableObject {
     
     init() {
         fetchInitialPokemon()
-//        fetchAllPokemon()
     }
     
     // MARK: Public
@@ -59,7 +58,7 @@ final class PokeListViewViewModel: ObservableObject {
                 
                 let result = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
                 let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result)
-                updatePokemon(with: newPokemon)
+                updatePokemon(with: newPokemon, animated: true)
             } catch {
                 print(error.localizedDescription)
             }
@@ -72,7 +71,7 @@ final class PokeListViewViewModel: ObservableObject {
             
             do {
                 let newPokemon = try await getInitialNewPokemon()
-                updatePokemon(with: newPokemon)
+                updatePokemon(with: newPokemon, animated: true)
             } catch {
                 print(error.localizedDescription)
             }
@@ -103,8 +102,9 @@ final class PokeListViewViewModel: ObservableObject {
     
     /// Coverts the result of getting all pokemon into an array of pokemon
     /// - Parameter allPokemonResult: PokeGetAllPokemonResponse to get the pokemon from
+    /// - Parameter filterAlternates: A bool that lets us
     /// - Returns: Array of pokemon
-    private func getPokemonFromAllPokemonResponse(allPokemonResult: PokeGetAllPokemonResponse) async throws -> [Pokemon] {
+    private func getPokemonFromAllPokemonResponse(allPokemonResult: PokeGetAllPokemonResponse, filterAlternates: Bool = false) async throws -> [Pokemon] {
         return try await withThrowingTaskGroup(of: Pokemon?.self) { group in
             var newPokemon = [Pokemon]()
 
@@ -128,6 +128,10 @@ final class PokeListViewViewModel: ObservableObject {
 
             for try await loadedPokemon in group {
                 guard let loadedPokemon = loadedPokemon else { continue }
+                if loadedPokemon.id > 10_000 && filterAlternates { // Any pokemon over 10,000 is an alternate form so we can choose to not include them
+                    nextURL = nil // So we set the nextURL to nil so that we don't get any more
+                    break
+                }
                 newPokemon.append(loadedPokemon)
             }
 
@@ -155,8 +159,8 @@ final class PokeListViewViewModel: ObservableObject {
                 let result = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
                 nextURL = result.next
                 
-                let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result)
-                updatePokemon(with: newPokemon)
+                let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result, filterAlternates: true)
+                updatePokemon(with: newPokemon, animated: true)
                 isLoadingMorePokemon = false
             } catch {
                 isLoadingMorePokemon = false
@@ -167,8 +171,10 @@ final class PokeListViewViewModel: ObservableObject {
     
     /// Add new Pokémon to the pokemon array
     /// - Parameter newPokemon: The new Pokémon to add
-    private func updatePokemon(with newPokemon: [Pokemon]) {
+    private func updatePokemon(with newPokemon: [Pokemon], animated: Bool = false) {
         // On main thread
-        pokemon.append(contentsOf: newPokemon)
+        withAnimation(animated ? .default : .none) {
+            pokemon.append(contentsOf: newPokemon)
+        }
     }
 }

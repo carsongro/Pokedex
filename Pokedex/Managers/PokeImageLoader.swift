@@ -25,6 +25,7 @@ final class PokeImageLoader {
     /// Get image content with URL
     /// - Parameters:
     ///   - url: Source url
+    /// - Returns: UIImage
     public func fetchImage(_ url: URL) async throws -> UIImage {
         let key = url.absoluteString as NSString
         if let data = imageDataCache.object(forKey: key),
