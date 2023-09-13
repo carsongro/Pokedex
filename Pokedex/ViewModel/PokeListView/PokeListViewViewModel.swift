@@ -86,7 +86,7 @@ final class PokeListViewViewModel: ObservableObject {
             queryParameters: [
                 URLQueryItem(
                     name: "limit",
-                    value: "100"
+                    value: "200"
                 ),
                 URLQueryItem(
                     name: "offset",

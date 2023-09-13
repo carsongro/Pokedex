@@ -203,6 +203,43 @@ struct AnimatedSprites: Codable {
 
 // MARK: Other (Sprites)
 struct Other: Codable {
+    let dream_world: DreamWorld?
+    let home: Home?
+    let officialArtwork: OfficialArtwork
+    
+    enum CodingKeys: String, CodingKey {
+        case dream_world
+        case home
+        case officialArtwork = "official-artwork"
+    }
+}
+
+// MARK: OfficialArtwork
+struct OfficialArtwork: Codable {
+    let back_default: String?
+    let back_female: String?
+    let back_shiny: String?
+    let back_shiny_Female: String?
+    let front_default: String?
+    let front_female: String?
+    let front_shiny: String?
+    let front_shiny_female: String?
+}
+
+// MARK: Home
+struct Home: Codable {
+    let back_default: String?
+    let back_female: String?
+    let back_shiny: String?
+    let back_shiny_Female: String?
+    let front_default: String?
+    let front_female: String?
+    let front_shiny: String?
+    let front_shiny_female: String?
+}
+
+// MARK: DreamWorld
+struct DreamWorld: Codable {
     let back_default: String?
     let back_female: String?
     let back_shiny: String?

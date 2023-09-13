@@ -13,6 +13,54 @@ extension String {
     }
 }
 
+extension UIDevice {
+    static let isPad = UIDevice.current.userInterfaceIdiom == .pad
+    static let isLandscape = UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight
+}
+
+struct RelativeHStack: Layout {
+    var spacing = 0.0
+    
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.replacingUnspecifiedDimensions().width
+        let viewFrame = frames(for: subviews, in: width)
+        let lowestView = viewFrame.max { $0.maxY < $1.maxY } ?? .zero
+        return CGSize(width: width, height: lowestView.maxY)
+    }
+    
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let viewFrames = frames(for: subviews, in: bounds.width)
+        
+        for index in subviews.indices {
+            let frame = viewFrames[index]
+            let position = CGPoint(x: bounds.minX + frame.minX, y: bounds.midY)
+            subviews[index].place(at: position, anchor: .leading, proposal: ProposedViewSize(frame.size))
+        }
+    }
+    
+    func frames(for subviews: Subviews, in totalWidth: Double) -> [CGRect] {
+        let totalSpacing = spacing * Double(subviews.count - 1)
+        let availableWidth = totalWidth - totalSpacing
+        let totalPriorities = subviews.reduce(0) { $0 + $1.priority }
+        
+        var viewFrames = [CGRect]()
+        var x = 0.0
+        
+        for subview in subviews {
+            let subviewWidth = availableWidth * subview.priority / totalPriorities
+            let proposal = ProposedViewSize(width: subviewWidth, height: nil)
+            let size = subview.sizeThatFits(proposal)
+            
+            let frame = CGRect(x: x, y: 0, width: size.width, height: size.height)
+            viewFrames.append(frame)
+            
+            x += size.width + spacing
+        }
+        
+        return viewFrames
+    }
+}
+
 // From one of the solutions here: https://stackoverflow.com/questions/448125/how-to-get-pixel-data-from-a-uiimage-cocoa-touch-or-cgimage-core-graphics
 extension CGImage {
     var color: Color? {

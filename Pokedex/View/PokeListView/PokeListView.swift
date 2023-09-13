@@ -25,17 +25,27 @@ struct PokeListView: View {
                                         types: pokemon.types
                                     )
                         )
-                        .shadow(color: .secondary, radius: 2, x: 2, y: 2)
                         .frame(height: fullView.size.height * 0.1)
-                    }
-                    
-                    if viewModel.canGetMorePokemon {
-                        ProgressView()
-                            .padding(.top, 20)
-                            .onAppear { viewModel.getMorePokemon() }
+                        .padding(3)
                     }
                 }
                 .padding(12)
+                
+                progressView
+            }
+        }
+    }
+}
+
+extension PokeListView {
+    var progressView: some View {
+        LazyVStack { // VStack needs to be lazy in order to only paginate when needed
+            // Keep this outside of the VGrid so that on large devices
+            // with multiple columns, the spinner is in the right spot
+            if viewModel.canGetMorePokemon {
+                ProgressView()
+                    .padding(.top, 20)
+                    .onAppear { viewModel.getMorePokemon() }
             }
         }
     }
