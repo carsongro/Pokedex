@@ -39,6 +39,12 @@ struct PokeListViewCellView: View {
                     .matchedGeometryEffect(id: viewModel.pokemonName, in: namespace)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background {
+                Color(uiColor: .secondarySystemBackground)
+                    .cornerRadius(10)
+                    .shadow(color: .secondary, radius: 1, x: 2, y: 2)
+                    .matchedGeometryEffect(id: String(viewModel.id) + "background", in: namespace)
+            }
         }
     }
 }

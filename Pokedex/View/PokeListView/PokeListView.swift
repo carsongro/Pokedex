@@ -31,12 +31,8 @@ struct PokeListView: View {
                                 )
                                 .id(pokemon.id)
                                 .frame(minHeight: fullView.size.height * 0.1)
-                                .background {
-                                    backgroundView
-                                        .matchedGeometryEffect(id: String(pokemon.id) + "background", in: fullscreen)
-                                }
                                 .onTapGesture {
-                                    withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                                    withAnimation(.spring()) {
                                         selectedPokemon = pokemon
                                         value.scrollTo(pokemon.id, anchor: .top)
                                     }
@@ -48,12 +44,8 @@ struct PokeListView: View {
                                 namespace: fullscreen
                             )
                             .id(pokemon.id)
-                            .background {
-                                backgroundView
-                                    .matchedGeometryEffect(id: String(selectedPokemon.id) + "background", in: fullscreen)
-                            }
                             .onTapGesture {
-                                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                                withAnimation(.spring()) {
                                     self.selectedPokemon = nil
                                 }
                             }

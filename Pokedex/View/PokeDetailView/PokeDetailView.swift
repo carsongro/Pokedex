@@ -22,7 +22,7 @@ struct PokeDetailView: View {
                 
                 KFAnimatedImage(viewModel.pokemonAnimatedSpriteURL != nil ? viewModel.pokemonAnimatedSpriteURL : viewModel.pokemonSpriteURL)
                     .scaledToFit()
-                    .shadow(color: .secondary, radius: 2, x: 1, y: -1)
+                    .shadow(color: .secondary, radius: 2, x: 1 , y: -1)
                     .matchedGeometryEffect(id: viewModel.pokemonSpriteURL?.absoluteString, in: namespace)
                     .frame(width: geo.frame(in: .global).width * 2/3, height: geo.frame(in: .global).height * 2/3)
                 
@@ -37,6 +37,12 @@ struct PokeDetailView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(12)
+        }
+        .background {
+            Color(uiColor: .secondarySystemBackground)
+                .cornerRadius(10)
+                .shadow(color: .secondary, radius: 1, x: 2, y: 2)
+                .matchedGeometryEffect(id: String(viewModel.id) + "background", in: namespace)
         }
     }
 }
