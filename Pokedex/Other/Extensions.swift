@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+extension Animation {
+    static var edgeBounce: Animation {
+        Animation.timingCurve(0.27, 0.13, 0.09, 1)
+    }
+    
+    static func edgeBounce(duration: TimeInterval = 0.2) -> Animation {
+        Animation.timingCurve(0.27, 0.13, 0.09, 1, duration: duration)
+    }
+    
+    static var easeInOutBack: Animation {
+        Animation.timingCurve(0.33, -0.28, 0.42, 0.96)
+    }
+    
+    static func easeInOutBack(duration: TimeInterval = 0.2) -> Animation {
+        Animation.timingCurve(0.33, -0.28, 0.42, 0.96, duration: duration)
+    }
+}
+
 extension String {
     func firstLetterCapitalized() -> String {
         prefix(1).uppercased() + self.lowercased().dropFirst()
