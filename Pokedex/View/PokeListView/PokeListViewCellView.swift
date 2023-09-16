@@ -10,9 +10,8 @@ import Kingfisher
 
 struct PokeListViewCellView: View {
     @ObservedObject var viewModel: PokeListViewCellViewViewModel
-    var namespace: Namespace.ID
     
-    @State private var showFullscreen = false
+    var namespace: Namespace.ID
     
     var body: some View {
         GeometryReader { geo in

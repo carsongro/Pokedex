@@ -8,12 +8,36 @@
 import SwiftUI
 import Kingfisher
 
+struct ScrollViewOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value += nextValue()
+    }
+}
+
 struct PokeDetailView: View {
     @ObservedObject var viewModel: PokeDetailViewViewModel
+    
     var namespace: Namespace.ID
     
+    var dismissHandler: (() -> Void)?
+    
     var body: some View {
-        GeometryReader { geo in
+        VStack {
+            // Temporary Dismiss Button
+            HStack {
+                Spacer()
+                
+                Button {
+                    dismissHandler?()
+                } label: {
+                    ZStack {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.primary)
+                    }
+                }
+            }
+            
             VStack {
                 Text(String(viewModel.pokemon.id))
                     .frame(maxWidth: .infinity)
@@ -24,8 +48,6 @@ struct PokeDetailView: View {
                     .scaledToFit()
                     .shadow(color: .secondary, radius: 2, x: 1 , y: -1)
                     .matchedGeometryEffect(id: viewModel.pokemonSpriteURL?.absoluteString, in: namespace)
-                    .frame(width: geo.frame(in: .global).width * 2/3, height: geo.frame(in: .global).height * 2/3)
-                
                 
                 Text(viewModel.pokemonName.firstLetterCapitalized())
                     .frame(maxWidth: .infinity)
@@ -33,16 +55,23 @@ struct PokeDetailView: View {
                     .lineLimit(1) //TODO: Handle this better
                     .matchedGeometryEffect(id: viewModel.pokemonName.firstLetterCapitalized(), in: namespace)
                 
-                Spacer()
+                ForEach(0..<100) { i in
+                    VStack {
+                        Text(String(i))
+                    }
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(12)
         }
+        .padding(12)
         .background {
             Color(uiColor: .secondarySystemBackground)
                 .cornerRadius(10)
-                .shadow(color: .secondary, radius: 1, x: 2, y: 2)
+                .shadow(color: .secondary, radius: 2, x: 3, y: 3)
                 .matchedGeometryEffect(id: String(viewModel.id) + "background", in: namespace)
+            GeometryReader {
+                Color.clear
+                    .preference(key: ScrollViewOffsetPreferenceKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
+            }
         }
     }
 }

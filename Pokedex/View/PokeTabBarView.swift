@@ -9,16 +9,22 @@ import SwiftUI
 
 struct PokeTabBarView: View {
     var body: some View {
-        TabView {
-            PokeListView()
-                .tabItem {
-                    Image(systemName: "house")
+        NavigationStack {
+            TabView {
+                Group {
+                    PokeListView()
+                        .tabItem {
+                            Image(systemName: "house")
+                        }
+                    
+                    PokeSearchView()
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                        }
                 }
-            
-            PokeSearchView()
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                }
+                .toolbarBackground(.thinMaterial, for: .tabBar)
+                .toolbarBackground(.visible, for: .tabBar)
+            }
         }
     }
 }

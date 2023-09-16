@@ -8,6 +8,11 @@
 import SwiftUI
 
 extension Animation {
+    
+    static let openDetailView = Animation.spring(response: 0.45, dampingFraction: 0.9)
+    
+    static let closeDetailView = Animation.spring(response: 0.35, dampingFraction: 1)
+    
     static var edgeBounce: Animation {
         Animation.timingCurve(0.27, 0.13, 0.09, 1)
     }
@@ -22,6 +27,16 @@ extension Animation {
     
     static func easeInOutBack(duration: TimeInterval = 0.2) -> Animation {
         Animation.timingCurve(0.33, -0.28, 0.42, 0.96, duration: duration)
+    }
+}
+
+extension View {
+    func noAnimation(action: @escaping () -> Void) {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            action()
+        }
     }
 }
 
