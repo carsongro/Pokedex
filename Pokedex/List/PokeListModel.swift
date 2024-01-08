@@ -104,7 +104,10 @@ final class PokeListModel {
     /// - Parameter allPokemonResult: PokeGetAllPokemonResponse to get the pokemon from
     /// - Parameter filterAlternates: A bool that lets us
     /// - Returns: Array of pokemon
-    private func getPokemonFromAllPokemonResponse(allPokemonResult: PokeGetAllPokemonResponse, filterAlternates: Bool = false) async throws -> [Pokemon] {
+    private func getPokemonFromAllPokemonResponse(
+        allPokemonResult: PokeGetAllPokemonResponse,
+        filterAlternates: Bool = false
+    ) async throws -> [Pokemon] {
         return try await withThrowingTaskGroup(of: Pokemon?.self) { group in
             var newPokemon = [Pokemon]()
 
