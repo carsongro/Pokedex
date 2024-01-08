@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B55DC7022AAFFF0800B6B9D4 /* PokemonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55DC7012AAFFF0800B6B9D4 /* PokemonType.swift */; };
-		B57F04FA2AAD2B42005691E5 /* PokeImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57F04F92AAD2B42005691E5 /* PokeImageLoader.swift */; };
 		B57F04FC2AAD2B4D005691E5 /* PokeAPICacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57F04FB2AAD2B4D005691E5 /* PokeAPICacheManager.swift */; };
 		B58AE7462AAD1DF4007D333D /* PokedexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AE7452AAD1DF4007D333D /* PokedexApp.swift */; };
 		B58AE7482AAD1DF4007D333D /* PokeTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AE7472AAD1DF4007D333D /* PokeTabBarView.swift */; };
@@ -22,12 +21,13 @@
 		B5E95BF72AAD302600A5E220 /* PokeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E95BF62AAD302600A5E220 /* PokeListModel.swift */; };
 		B5E95BFD2AAD31E100A5E220 /* PokemonListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E95BFC2AAD31E100A5E220 /* PokemonListResponse.swift */; };
 		B5E95BFF2AAD375700A5E220 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E95BFE2AAD375700A5E220 /* Pokemon.swift */; };
+		B8699C882B4CA41100B602AC /* PokeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8699C872B4CA41100B602AC /* PokeDetailView.swift */; };
+		B8699C8A2B4CA51600B602AC /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8699C892B4CA51600B602AC /* PreviewData.swift */; };
 		B87316782B4C4BE1007DA9F3 /* PokeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87316772B4C4BE1007DA9F3 /* PokeListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B55DC7012AAFFF0800B6B9D4 /* PokemonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonType.swift; sourceTree = "<group>"; };
-		B57F04F92AAD2B42005691E5 /* PokeImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeImageLoader.swift; sourceTree = "<group>"; };
 		B57F04FB2AAD2B4D005691E5 /* PokeAPICacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPICacheManager.swift; sourceTree = "<group>"; };
 		B58AE7422AAD1DF4007D333D /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58AE7452AAD1DF4007D333D /* PokedexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexApp.swift; sourceTree = "<group>"; };
@@ -41,6 +41,8 @@
 		B5E95BF62AAD302600A5E220 /* PokeListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListModel.swift; sourceTree = "<group>"; };
 		B5E95BFC2AAD31E100A5E220 /* PokemonListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListResponse.swift; sourceTree = "<group>"; };
 		B5E95BFE2AAD375700A5E220 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		B8699C872B4CA41100B602AC /* PokeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeDetailView.swift; sourceTree = "<group>"; };
+		B8699C892B4CA51600B602AC /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		B87316772B4C4BE1007DA9F3 /* PokeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,7 +61,6 @@
 		B57F04F82AAD2B38005691E5 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				B57F04F92AAD2B42005691E5 /* PokeImageLoader.swift */,
 				B57F04FB2AAD2B4D005691E5 /* PokeAPICacheManager.swift */,
 			);
 			path = Managers;
@@ -89,6 +90,7 @@
 				B57F04F82AAD2B38005691E5 /* Managers */,
 				B5AC6DFD2AAD207E0020B8F6 /* APIClient */,
 				B87316762B4C4B25007DA9F3 /* List */,
+				B8699C862B4CA40400B602AC /* Pokemon */,
 				B58AE7542AAD1E59007D333D /* Model */,
 				B58AE74B2AAD1DF5007D333D /* Preview Content */,
 			);
@@ -107,8 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				B58AE7452AAD1DF4007D333D /* PokedexApp.swift */,
-				B58AE7492AAD1DF5007D333D /* Assets.xcassets */,
 				B5AF55652AAE950100850684 /* Extensions.swift */,
+				B58AE7492AAD1DF5007D333D /* Assets.xcassets */,
+				B8699C892B4CA51600B602AC /* PreviewData.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -131,6 +134,14 @@
 				B5AC6E022AAD21000020B8F6 /* PokeEndpoint.swift */,
 			);
 			path = APIClient;
+			sourceTree = "<group>";
+		};
+		B8699C862B4CA40400B602AC /* Pokemon */ = {
+			isa = PBXGroup;
+			children = (
+				B8699C872B4CA41100B602AC /* PokeDetailView.swift */,
+			);
+			path = Pokemon;
 			sourceTree = "<group>";
 		};
 		B87316762B4C4B25007DA9F3 /* List */ = {
@@ -227,10 +238,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B57F04FC2AAD2B4D005691E5 /* PokeAPICacheManager.swift in Sources */,
-				B57F04FA2AAD2B42005691E5 /* PokeImageLoader.swift in Sources */,
 				B55DC7022AAFFF0800B6B9D4 /* PokemonType.swift in Sources */,
 				B58AE7482AAD1DF4007D333D /* PokeTabBarView.swift in Sources */,
 				B5E95BF72AAD302600A5E220 /* PokeListModel.swift in Sources */,
+				B8699C8A2B4CA51600B602AC /* PreviewData.swift in Sources */,
 				B5E95BFD2AAD31E100A5E220 /* PokemonListResponse.swift in Sources */,
 				B5AC6E012AAD20F70020B8F6 /* PokeRequest.swift in Sources */,
 				B87316782B4C4BE1007DA9F3 /* PokeListView.swift in Sources */,
@@ -238,6 +249,7 @@
 				B5E95BFF2AAD375700A5E220 /* Pokemon.swift in Sources */,
 				B58AE7462AAD1DF4007D333D /* PokedexApp.swift in Sources */,
 				B5AC6DFF2AAD209E0020B8F6 /* PokeService.swift in Sources */,
+				B8699C882B4CA41100B602AC /* PokeDetailView.swift in Sources */,
 				B5AF55662AAE950100850684 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
