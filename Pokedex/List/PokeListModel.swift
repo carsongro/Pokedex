@@ -1,5 +1,5 @@
 //
-//  PokeListViewViewModel.swift
+//  PokeListModel.swift
 //  Pokedex
 //
 //  Created by Carson Gross on 9/9/23.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-@MainActor
-final class PokeListViewViewModel: ObservableObject {
-    @Published var pokemon = [Pokemon]()
+@Observable
+final class PokeListModel {
+    var pokemon = [Pokemon]()
     var canGetMorePokemon: Bool {
         nextURL != nil
     }
@@ -58,7 +58,7 @@ final class PokeListViewViewModel: ObservableObject {
                 
                 let result = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
                 let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result)
-                updatePokemon(with: newPokemon, animated: true)
+                await updatePokemon(with: newPokemon, animated: true)
             } catch {
                 print(error.localizedDescription)
             }
@@ -71,7 +71,7 @@ final class PokeListViewViewModel: ObservableObject {
             
             do {
                 let newPokemon = try await getInitialNewPokemon()
-                updatePokemon(with: newPokemon, animated: true)
+                await updatePokemon(with: newPokemon, animated: true)
             } catch {
                 print(error.localizedDescription)
             }
@@ -160,7 +160,7 @@ final class PokeListViewViewModel: ObservableObject {
                 nextURL = result.next
                 
                 let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result, filterAlternates: true)
-                updatePokemon(with: newPokemon, animated: true)
+                await updatePokemon(with: newPokemon, animated: true)
                 isLoadingMorePokemon = false
             } catch {
                 isLoadingMorePokemon = false
@@ -169,6 +169,7 @@ final class PokeListViewViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     /// Add new Pokémon to the pokemon array
     /// - Parameter newPokemon: The new Pokémon to add
     private func updatePokemon(with newPokemon: [Pokemon], animated: Bool = false) {

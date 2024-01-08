@@ -8,7 +8,15 @@
 import Foundation
 
 // MARK: Pokemon
-struct Pokemon: Codable, Identifiable {
+struct Pokemon: Codable, Identifiable, Equatable, Hashable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     let abilities: [Ability]
     let base_experience: Int?
     let forms: [Species]
