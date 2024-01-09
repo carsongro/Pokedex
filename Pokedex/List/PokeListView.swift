@@ -38,7 +38,7 @@ struct PokeListView: View {
             }
             .navigationTitle("Pokédex")
             .navigationDestination(for: Pokemon.self) { pokemon in
-                // TODO: PokeDetailView
+                PokeDetailView(pokemon: pokemon)
             }
         }
     }
