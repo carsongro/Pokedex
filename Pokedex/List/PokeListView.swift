@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct PokeListView: View {
     @State private var listModel = PokeListModel()
@@ -20,18 +19,12 @@ struct PokeListView: View {
                     List {
                         ForEach(listModel.pokemon) { pokemon in
                             NavigationLink(value: pokemon) {
-                                HStack {
-                                    KFImage(URL(string: pokemon.sprites.front_default ?? ""))
-                                        .resizable()
-                                        .frame(width: 70, height: 70)
-                                        .aspectRatio(contentMode: .fit)
-                                    
-                                    Text(pokemon.name)
-                                }
+                                PokemonRowView(pokemon: pokemon)
                             }
                         }
                         
                         paginationIndicator
+                            .listRowSeparator(.hidden)
                     }
                     .listStyle(.plain)
                 }

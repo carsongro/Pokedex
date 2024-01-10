@@ -23,6 +23,7 @@
 		B5E95BFF2AAD375700A5E220 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E95BFE2AAD375700A5E220 /* Pokemon.swift */; };
 		B8699C882B4CA41100B602AC /* PokeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8699C872B4CA41100B602AC /* PokeDetailView.swift */; };
 		B8699C8A2B4CA51600B602AC /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8699C892B4CA51600B602AC /* PreviewData.swift */; };
+		B86C63982B4F45900085B290 /* PokemonRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C63972B4F45900085B290 /* PokemonRowView.swift */; };
 		B87316782B4C4BE1007DA9F3 /* PokeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87316772B4C4BE1007DA9F3 /* PokeListView.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		B5E95BFE2AAD375700A5E220 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		B8699C872B4CA41100B602AC /* PokeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeDetailView.swift; sourceTree = "<group>"; };
 		B8699C892B4CA51600B602AC /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
+		B86C63972B4F45900085B290 /* PokemonRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonRowView.swift; sourceTree = "<group>"; };
 		B87316772B4C4BE1007DA9F3 /* PokeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				B8699C872B4CA41100B602AC /* PokeDetailView.swift */,
+				B86C63972B4F45900085B290 /* PokemonRowView.swift */,
 			);
 			path = Pokemon;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B57F04FC2AAD2B4D005691E5 /* PokeAPICacheManager.swift in Sources */,
+				B86C63982B4F45900085B290 /* PokemonRowView.swift in Sources */,
 				B55DC7022AAFFF0800B6B9D4 /* PokemonType.swift in Sources */,
 				B58AE7482AAD1DF4007D333D /* PokeTabBarView.swift in Sources */,
 				B5E95BF72AAD302600A5E220 /* PokeListModel.swift in Sources */,
