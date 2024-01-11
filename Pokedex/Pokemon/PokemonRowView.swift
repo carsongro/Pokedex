@@ -19,6 +19,7 @@ struct PokemonRowView: View {
                 .resizable()
                 .frame(width: 70, height: 70)
                 .aspectRatio(contentMode: .fit)
+                .accessibilityHidden(true)
             
             Text(pokemon.name)
                 .lineLimit(1)
@@ -39,6 +40,7 @@ struct PokemonRowView: View {
                 }
             }
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
