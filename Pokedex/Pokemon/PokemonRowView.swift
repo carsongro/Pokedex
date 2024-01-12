@@ -21,7 +21,7 @@ struct PokemonRowView: View {
                 .aspectRatio(contentMode: .fit)
                 .accessibilityHidden(true)
             
-            Text(pokemon.name)
+            Text(pokemon.name.firstLetterCapitalized())
                 .lineLimit(1)
                 .fontWeight(.semibold)
             

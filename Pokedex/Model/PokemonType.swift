@@ -30,41 +30,41 @@ enum PokemonType: String, Codable {
     public var color: Color {
         switch self {
         case .normal:
-            return .gray
+            return Color("Normal")
         case .fire:
-            return .red
+            return Color("Fire")
         case .water:
-            return .blue
+            return Color("Water")
         case .grass:
-            return .green
+            return Color("Grass")
         case .electric:
-            return .yellow
+            return Color("Electric")
         case .ice:
-            return .teal
+            return Color("Ice")
         case .fighting:
-            return .red
+            return Color("Fighting")
         case .poison:
-            return .purple
+            return Color("Poison")
         case .ground:
-            return .brown
+            return Color("Ground")
         case .flying:
-            return .mint
+            return Color("Flying")
         case .psychic:
-            return .pink
+            return Color("Psychic")
         case .bug:
-            return .green
+            return Color("Bug")
         case .rock:
-            return .gray
+            return Color("Rock")
         case .ghost:
-            return .purple
+            return Color("Ghost")
         case .dragon:
-            return .purple
+            return Color("Dragon")
         case .dark:
-            return .brown
+            return Color("Dark")
         case .steel:
-            return .gray
+            return Color("Steel")
         case .fairy:
-            return .pink
+            return Color("Fairy")
         }
     }
 }
