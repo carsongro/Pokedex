@@ -33,7 +33,7 @@ struct PokemonRowView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundStyle(color)
                             .overlay {
-                                Text(type.type.name)
+                                Text(type.type.name.firstLetterCapitalized())
                             }
                             .frame(maxWidth: 100)
                     }
