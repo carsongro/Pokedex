@@ -29,14 +29,7 @@ struct PokemonRowView: View {
             
             VStack {
                 ForEach(pokemon.types, id: \.type.name) { type in
-                    if let color = PokemonType(rawValue: type.type.name)?.color{
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(color)
-                            .overlay {
-                                Text(type.type.name.firstLetterCapitalized())
-                            }
-                            .frame(maxWidth: 100)
-                    }
+                    PokemonTypeBubble(type: type)
                 }
             }
         }

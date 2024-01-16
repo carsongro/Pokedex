@@ -14,7 +14,7 @@ struct PokeDetailView: View {
     var body: some View {
         List {
             Section {
-                KFAnimatedImage(URL(string: pokemon.sprites.versions.generationV.blackWhite.animated?.front_default ?? ""))
+                KFAnimatedImage(URL(string: animatedSpriteURLString))
                     .frame(width: 200, height: 200)
             }
             .listRowSeparator(.hidden)
@@ -27,8 +27,34 @@ struct PokeDetailView: View {
             }
             .listRowSeparator(.hidden)
             .frame(maxWidth: .infinity)
+            
+            Section {
+                typeBubbles
+            } header: {
+                Text("Type")
+                    .frame(maxWidth: .infinity)
+            }
+            
+            Section {
+                
+            } header: {
+                Text("Abilities")
+                    .frame(maxWidth: .infinity)
+            }
         }
         .listStyle(.plain)
+    }
+    
+    private var typeBubbles: some View {
+        HStack {
+            ForEach(pokemon.types, id: \.type.name) { type in
+                PokemonTypeBubble(type: type)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: 100)
+    }
+    
+    private var animatedSpriteURLString: String { pokemon.sprites.versions.generationV.blackWhite.animated?.front_default ?? ""
     }
 }
 
