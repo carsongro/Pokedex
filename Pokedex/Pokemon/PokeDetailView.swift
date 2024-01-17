@@ -34,6 +34,7 @@ struct PokeDetailView: View {
                 Text("Type")
                     .frame(maxWidth: .infinity)
             }
+            .listRowSeparator(.hidden)
             
             Section {
                 
@@ -41,6 +42,7 @@ struct PokeDetailView: View {
                 Text("Abilities")
                     .frame(maxWidth: .infinity)
             }
+            .listRowSeparator(.hidden)
         }
         .listStyle(.plain)
     }

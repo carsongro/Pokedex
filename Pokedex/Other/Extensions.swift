@@ -48,7 +48,9 @@ extension String {
 
 extension UIDevice {
     static let isPad = UIDevice.current.userInterfaceIdiom == .pad
+    #if os(iOS)
     static let isLandscape = UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight
+    #endif
 }
 
 struct RelativeHStack: Layout {
