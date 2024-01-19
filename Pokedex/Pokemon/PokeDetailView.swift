@@ -37,7 +37,11 @@ struct PokeDetailView: View {
             .listRowSeparator(.hidden)
             
             Section {
-                
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
+                    ForEach(pokemon.abilities, id: \.ability.name) { ability in
+                        Text(ability.ability.name.firstLetterCapitalized())
+                    }
+                }
             } header: {
                 Text("Abilities")
                     .frame(maxWidth: .infinity)
