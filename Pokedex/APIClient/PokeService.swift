@@ -28,7 +28,7 @@ final class PokeService {
         _ request: PokeRequest,
         expecting type: T.Type
     ) async throws -> T {
-        if let cachedData = cacheManager.cachedResponse(
+        if let cachedData = await cacheManager.cachedResponse(
             for: request.endpoint,
             url: request.url
         ) {
@@ -55,7 +55,7 @@ final class PokeService {
         // Decode response
         do {
             let result = try JSONDecoder().decode(type.self, from: data)
-            cacheManager.setCache(
+            await cacheManager.setCache(
                 for: request.endpoint,
                 url: request.url,
                 data: data

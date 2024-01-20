@@ -36,7 +36,7 @@ final class PokeListModel {
     
     // MARK: Private
     
-    /// Gets all Pokémon, this takes forever and blocks the main thread so not good to use for use as of now
+    /// Gets all Pokémon
     private func fetchAllPokemon() {
         Task { [weak self] in
             guard let self else { return }
@@ -78,7 +78,7 @@ final class PokeListModel {
         }
     }
     
-    /// Function that gets the initial list of pokemon
+    /// Function that gets the initial list of pokemon, currently gets all pokemon so everything is cached to storage
     /// - Returns: An array of pokemon
     private func getInitialNewPokemon() async throws -> [Pokemon] {
         let request = PokeRequest(
@@ -86,7 +86,7 @@ final class PokeListModel {
             queryParameters: [
                 URLQueryItem(
                     name: "limit",
-                    value: "20"
+                    value: "100000"
                 ),
                 URLQueryItem(
                     name: "offset",
@@ -97,7 +97,7 @@ final class PokeListModel {
         let allPokemonResult = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
         nextURL = allPokemonResult.next
         
-        return try await getPokemonFromAllPokemonResponse(allPokemonResult: allPokemonResult)
+        return try await getPokemonFromAllPokemonResponse(allPokemonResult: allPokemonResult, filterAlternates: true)
     }
     
     /// Coverts the result of getting all pokemon into an array of pokemon
@@ -135,7 +135,11 @@ final class PokeListModel {
                     nextURL = nil // So we set the nextURL to nil so that we don't get any more
                     continue
                 }
-                newPokemon.append(loadedPokemon)
+                if loadedPokemon.id < 10_000 && filterAlternates {
+                    newPokemon.append(loadedPokemon)
+                } else {
+                    newPokemon.append(loadedPokemon)
+                }
             }
 
             /// Task Groups return based on completions not in order they are stored
