@@ -60,7 +60,7 @@ struct PokeDetailView: View {
         .frame(maxWidth: .infinity, maxHeight: 100)
     }
     
-    private var animatedSpriteURLString: String { pokemon.sprites.versions.generationV.blackWhite.animated?.front_default ?? ""
+    private var animatedSpriteURLString: String { pokemon.sprites.versions.generationV.blackWhite.animated?.front_default ?? pokemon.sprites.front_default ?? ""
     }
 }
 
