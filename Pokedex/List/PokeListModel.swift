@@ -118,8 +118,8 @@ final class PokeListModel {
                 }
 
                 group.addTask {
-                    /// Adding a do catch block here so that the throw doesn't propegate up and cancel the whole task
-                    /// This way it only affects this iteration of the for loop
+                    // Adding a do catch block here so that the throw doesn't propegate up and cancel the whole task
+                    // This way it only affects this iteration of the for loop
                     do {
                         return try await PokeService.shared.execute(pokemonRequest)
                     } catch {
@@ -131,8 +131,10 @@ final class PokeListModel {
 
             for try await loadedPokemon in group {
                 guard let loadedPokemon = loadedPokemon else { continue }
-                if loadedPokemon.id > 10_000 && filterAlternates { // Any pokemon over 10,000 is an alternate form so we can choose to not include them
-                    nextURL = nil // So we set the nextURL to nil so that we don't get any more
+                if loadedPokemon.id > 10_000 && filterAlternates { 
+                    // Any pokemon over 10,000 is an alternate form so we can choose to not include them
+                    // so we set the nextURL to nil so that we don't get any more
+                    nextURL = nil
                     continue
                 }
                 if loadedPokemon.id < 10_000 && filterAlternates {
@@ -142,8 +144,6 @@ final class PokeListModel {
                 }
             }
 
-            /// Task Groups return based on completions not in order they are stored
-            /// So sorting is needed here
             return newPokemon.sorted { $0.id < $1.id }
         }
     }
