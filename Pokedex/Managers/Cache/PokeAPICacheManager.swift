@@ -8,13 +8,14 @@
 import UIKit
 
 actor PokeAPICacheManager {
-    // API URL: Data
-    private var cacheDictionary = [PokeEndpoint: NSCache<NSString, CacheEntry>]()
-    private var storageCache = StorageCache()
+    static let shared = PokeAPICacheManager()
     
-    init() {
+    private init() {
         setUpCache()
     }
+    
+    private var memoryCacheDictionary = [PokeEndpoint: NSCache<NSString, CacheEntry>]()
+    private var storageCache = StorageCache.shared
     
     // MARK: Public
     
@@ -23,7 +24,7 @@ actor PokeAPICacheManager {
         
         if let data = await storageCache.item(forKey: url.absoluteString) {
             return .ready(data)
-        } else if let targetCache = cacheDictionary[endpoint] {
+        } else if let targetCache = memoryCacheDictionary[endpoint] {
             let key = url.absoluteString as NSString
             return targetCache.object(forKey: key)?.item
         } else {
@@ -34,7 +35,7 @@ actor PokeAPICacheManager {
     public func setCache(for endpoint: PokeEndpoint, url: URL?, entry: CacheEntryItem) async {
         guard let url = url else { return }
         
-        guard let targetCache = cacheDictionary[endpoint] else {
+        guard let targetCache = memoryCacheDictionary[endpoint] else {
             return
         }
         
@@ -82,11 +83,11 @@ actor PokeAPICacheManager {
     }
     
     private func setUpEntry(for endpoint: PokeEndpoint) {
-        cacheDictionary[endpoint] = NSCache<NSString, CacheEntry>()
+        memoryCacheDictionary[endpoint] = NSCache<NSString, CacheEntry>()
     }
     
     private func removeAllObjectsFromMemory() {
-        for (_, v) in cacheDictionary {
+        for (_, v) in memoryCacheDictionary {
             v.removeAllObjects()
         }
     }

@@ -56,7 +56,7 @@ final class PokeListModel {
                     ]
                 )
                 
-                let result = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
+                let result: PokeGetAllPokemonResponse = try await PokeService.shared.execute(request)
                 let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result)
                 await updatePokemon(with: newPokemon, animated: true)
             } catch {
@@ -94,7 +94,7 @@ final class PokeListModel {
                 )
             ]
         )
-        let allPokemonResult = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
+        let allPokemonResult: PokeGetAllPokemonResponse = try await PokeService.shared.execute(request)
         nextURL = allPokemonResult.next
         
         return try await getPokemonFromAllPokemonResponse(allPokemonResult: allPokemonResult, filterAlternates: true)
@@ -121,7 +121,7 @@ final class PokeListModel {
                     /// Adding a do catch block here so that the throw doesn't propegate up and cancel the whole task
                     /// This way it only affects this iteration of the for loop
                     do {
-                        return try await PokeService.shared.execute(pokemonRequest, expecting: Pokemon.self)
+                        return try await PokeService.shared.execute(pokemonRequest)
                     } catch {
                         print(error)
                         return nil
@@ -163,7 +163,7 @@ final class PokeListModel {
             }
             
             do {
-                let result = try await PokeService.shared.execute(request, expecting: PokeGetAllPokemonResponse.self)
+                let result: PokeGetAllPokemonResponse = try await PokeService.shared.execute(request)
                 nextURL = result.next
                 
                 let newPokemon = try await getPokemonFromAllPokemonResponse(allPokemonResult: result, filterAlternates: true)

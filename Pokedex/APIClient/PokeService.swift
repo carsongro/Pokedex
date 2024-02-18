@@ -12,7 +12,7 @@ final class PokeService {
     /// Shared singleton instance
     static let shared = PokeService()
     
-    private let cacheManager = PokeAPICacheManager()
+    private let cacheManager = PokeAPICacheManager.shared
     
     /// Privatized constructor
     private init() {}
@@ -24,21 +24,19 @@ final class PokeService {
     
     // MARK: Public
     
-    public func execute<T: Codable>(
-        _ request: PokeRequest,
-        expecting type: T.Type
-    ) async throws -> T {
+    public func execute<T: Codable>(_ request: PokeRequest) async throws -> T {
         if let item = await cacheManager.cachedResponse(
             for: request.endpoint,
             url: request.url
         ) {
-            switch item {
+            let data = switch item {
             case .inProgress(let task):
-                let data = try await task.value
-                return try JSONDecoder().decode(T.self, from: data)
+                try await task.value
             case .ready(let data):
-                return try JSONDecoder().decode(type.self, from: data)
+                data
             }
+            
+            return try JSONDecoder().decode(T.self, from: data)
         }
         
         let task = Task {
@@ -49,12 +47,8 @@ final class PokeService {
         
         do {
             let data = try await task.value
-            let result = try JSONDecoder().decode(type.self, from: data)
-            await cacheManager.setCache(
-                for: request.endpoint,
-                url: request.url,
-                entry: .ready(data)
-            )
+            let result = try JSONDecoder().decode(T.self, from: data)
+            await cacheManager.setCache(for: request.endpoint, url: request.url, entry: .ready(data))
             return result
         } catch {
             throw error

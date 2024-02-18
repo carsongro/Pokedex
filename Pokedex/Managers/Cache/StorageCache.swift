@@ -8,11 +8,12 @@
 import UIKit
 import CryptoKit
 
-public actor StorageCache {
+actor StorageCache {
+    static let shared = StorageCache()
     
     private let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("com.carsongro.Pokedex.PokeAPICache", isDirectory: true)
     
-    init() {
+    private init() {
         try? FileManager.default.createDirectory(atPath: cachesDirectory.path(), withIntermediateDirectories: true)
     }
     
