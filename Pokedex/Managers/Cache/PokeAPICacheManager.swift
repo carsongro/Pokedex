@@ -7,10 +7,9 @@
 
 import UIKit
 
-// TODO: Refactor this so that stores in progress requests in the cache to prevent duplicate requests being carried out
 actor PokeAPICacheManager {
     // API URL: Data
-    private var cacheDictionary = [PokeEndpoint: NSCache<NSString, NSData>]()
+    private var cacheDictionary = [PokeEndpoint: NSCache<NSString, CacheEntry>]()
     private var storageCache = StorageCache()
     
     init() {
@@ -19,29 +18,35 @@ actor PokeAPICacheManager {
     
     // MARK: Public
     
-    public func cachedResponse(for endpoint: PokeEndpoint, url: URL?) async -> Data? {
+    public func cachedResponse(for endpoint: PokeEndpoint, url: URL?) async -> CacheEntryItem? {
         guard let url = url else { return nil }
         
         if let data = await storageCache.item(forKey: url.absoluteString) {
-            return data
+            return .ready(data)
         } else if let targetCache = cacheDictionary[endpoint] {
             let key = url.absoluteString as NSString
-            return targetCache.object(forKey: key) as? Data
+            return targetCache.object(forKey: key)?.item
         } else {
             return nil
         }
     }
     
-    public func setCache(for endpoint: PokeEndpoint, url: URL?, data: Data) async {
+    public func setCache(for endpoint: PokeEndpoint, url: URL?, entry: CacheEntryItem) async {
         guard let url = url else { return }
-        await storageCache.setItem(data, forKey: url.absoluteString)
         
         guard let targetCache = cacheDictionary[endpoint] else {
             return
         }
         
         let key = url.absoluteString as NSString
-        targetCache.setObject(data as NSData, forKey: key)
+        targetCache.setObject(CacheEntry(item: entry), forKey: key)
+        
+        switch entry {
+        case .ready(let data):
+            await storageCache.setItem(data, forKey: url.absoluteString)
+        default:
+            break
+        }
     }
     
     
@@ -77,7 +82,7 @@ actor PokeAPICacheManager {
     }
     
     private func setUpEntry(for endpoint: PokeEndpoint) {
-        cacheDictionary[endpoint] = NSCache<NSString, NSData>()
+        cacheDictionary[endpoint] = NSCache<NSString, CacheEntry>()
     }
     
     private func removeAllObjectsFromMemory() {
@@ -109,6 +114,21 @@ actor PokeAPICacheManager {
             let background = UIApplication.shared.beginBackgroundTask()
             cleanExpiredStorageCache()
             UIApplication.shared.endBackgroundTask(background)
+        }
+    }
+}
+
+enum CacheEntryItem {
+    case inProgress(Task<Data, Error>)
+    case ready(Data)
+}
+
+extension PokeAPICacheManager {
+    final class CacheEntry {
+        let item: CacheEntryItem
+        
+        init(item: CacheEntryItem) {
+            self.item = item
         }
     }
 }

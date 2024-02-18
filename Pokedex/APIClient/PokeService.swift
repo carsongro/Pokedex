@@ -28,37 +28,32 @@ final class PokeService {
         _ request: PokeRequest,
         expecting type: T.Type
     ) async throws -> T {
-        if let cachedData = await cacheManager.cachedResponse(
+        if let item = await cacheManager.cachedResponse(
             for: request.endpoint,
             url: request.url
         ) {
-            // Decode response
-            do {
-                let result = try JSONDecoder().decode(type.self, from: cachedData)
-                return result
-            } catch {
-                throw error
+            switch item {
+            case .inProgress(let task):
+                let data = try await task.value
+                return try JSONDecoder().decode(T.self, from: data)
+            case .ready(let data):
+                return try JSONDecoder().decode(type.self, from: data)
             }
         }
         
-        guard let urlRequest = self.request(from: request) else {
-            throw PokeServiceError.failedToCreateRequest
+        let task = Task {
+            return try await loadData(from: request)
         }
         
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        await cacheManager.setCache(for: request.endpoint, url: request.url, entry: .inProgress(task))
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw PokeServiceError.failedToGetData
-        }
-        
-        // Decode response
         do {
+            let data = try await task.value
             let result = try JSONDecoder().decode(type.self, from: data)
             await cacheManager.setCache(
                 for: request.endpoint,
                 url: request.url,
-                data: data
+                entry: .ready(data)
             )
             return result
         } catch {
@@ -76,5 +71,14 @@ final class PokeService {
         var request = URLRequest(url: url)
         request.httpMethod = pokeRequest.httpMethod
         return request
+    }
+    
+    private func loadData(from pokeRequest: PokeRequest) async throws -> Data {
+        guard let urlRequest = self.request(from: pokeRequest) else {
+            throw PokeServiceError.failedToCreateRequest
+        }
+        
+        let (data, _) = try await URLSession.shared.data(for: urlRequest)
+        return data
     }
 }
